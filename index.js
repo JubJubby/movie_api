@@ -181,25 +181,25 @@ app.get("/movies/:title", (req, res) => {
     }
 })
 
-app.get("movies/genre/genreName", (req, res) => {
+app.get("movies/genre/:genreName", (req, res) => {
     const {genreName} = req.params;
     const genre = movies.find(movie => movie.Genre.Name === genreName).Genre;
 
     if (genre) {
         res.status(200).json(genre);
     } else {
-        res.status(400).send("no such genre")
+        res.status(400).send("no such genre");
     }
 })
 
-app.get("movies/directors/directorName", (req, res) => {
+app.get("movies/directors/:directorName", (req, res) => {
     const {directorName} = req.params;
     const director = movies.find(movie => movie.Director.Name === directorName).Director;
 
     if (director) {
         res.status(200).json(genre);
     } else {
-        res.status(400).send("no such director")
+        res.status(400).send("no such director");
     }
 })
 
