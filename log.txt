@@ -80,3 +80,4 @@
 ::1 - - [13/Aug/2024:14:05:30 +0000] "GET /movies/genre/Horror HTTP/1.1" 200 68 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 ::1 - - [13/Aug/2024:14:05:49 +0000] "GET /movies/directors/Terry%20Gillam HTTP/1.1" - - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 ::1 - - [13/Aug/2024:14:14:54 +0000] "GET /movies/directors/Terry%20Gillam HTTP/1.1" 200 104 "-" "PostmanRuntime/7.41.0"
+::1 - - [13/Aug/2024:14:19:46 +0000] "GET /movies/directors/Terry%20Gillam HTTP/1.1" 200 104 "-" "PostmanRuntime/7.41.0"

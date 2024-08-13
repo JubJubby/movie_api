@@ -203,7 +203,7 @@ app.get("/movies/directors/:directorName", (req, res) => {
         }
     });
 
-    if (moviesByDirector.length > 0) {
+    if (moviesByDirector) {
         res.status(200).json(moviesByDirector);
     } else {
         res.status(400).send("no such director");
