@@ -181,9 +181,9 @@ app.get("/movies/:title", (req, res) => {
     }
 })
 
-app.get("movies/genre/:genreName", (req, res) => {
+app.get("/movies/genre/:genreName", (req, res) => {
     const {genreName} = req.params;
-    const genre = movies.find(movie => movie.Genre.Name === genreName).Genre;
+    const genre = movies.find((movie) => movie.Genre === genreName);
 
     if (genre) {
         res.status(200).json(genre);
@@ -192,16 +192,23 @@ app.get("movies/genre/:genreName", (req, res) => {
     }
 })
 
-app.get("movies/directors/:directorName", (req, res) => {
+app.get("/movies/directors/:directorName", (req, res) => {
     const {directorName} = req.params;
-    const director = movies.find(movie => movie.Director.Name === directorName).Director;
 
-    if (director) {
-        res.status(200).json(genre);
+    const moviesByDirector = movies.filter((movie) => {
+        if (Array.isArray(movie.Director)) {
+            return movie.Director.includes(directorName);
+        } else {
+            return movie.Director === directorName;
+        }
+    });
+
+    if (moviesByDirector.length > 0) {
+        res.status(200).json(moviesByDirector);
     } else {
         res.status(400).send("no such director");
     }
-})
+});
 
 //listen for requests
 app.listen(8080, () => {
