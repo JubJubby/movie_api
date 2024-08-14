@@ -1,10 +1,39 @@
-URL endpoints:
-<br>/movies returns a list of all movies using a GET request.
-<br>/movies/movieName returns a movie's data by the movie's name using a GET request (use "%20" in place of a space).
-<br>/movies/genre/genreName returns movies by the movies' genre using a GET request.
-<br>/movies/director/directorName returns director's data by name using a GET request.
-<br>/users creates a new user using a POST request.
-<br>/users/ID updates a user's name using a PUT request.
-<br>/users/ID/movieName adds a movie to a user's favorites list using a POST request.
-<br>/users/ID/movieName removes a movie from a user's favorites list using a DELETE request.
-<br>/users/ID removes a user using a DELETE request.
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+        <link rel="stylesheet" href="styles.css"/>
+        <title>movie_api documentation</title>
+    </head>
+    <body>
+        <h1>Objective</h1>
+
+        <p>
+            To build the server-side component of a “movies” web application. The web
+            application will provide users with access to information about different
+            movies, directors, and genres. Users will be able to sign up, update their
+            personal information, and create a list of their favorite movies.
+        </p>
+        <p>The APIs are made using RESTful architechture.</p>
+        <ul>
+            <li>/movies returns a list of all movies using a GET request.</li>
+            <br><li>/movies/movieName returns a movie's data by the movie's name using a GET request. <br>Use "%20" in place of a space. <br>Example: "/movies/Rat%20Race" will return: <br>Title: "Rat Race"<br>Director: "Jerry Zucker"<br>Genre: "Comedy"</li>
+            <br><li>/movies/genre/genreName returns movies by the movies' genre using a GET request. <br>Use "%20" in place of a space. <br>Example: "/movies/genre/Horror" will return: <br>Title: "Donnie Darko"<br>Director: "Richard Kelly"<br>Genre: "Horror"</li>
+            <br><li>/movies/directors/directorName returns director's data by name using a GET request. <br>Use "%20" in place of a space. <br>Example: "/movies/directors/Mel%20Brooks" will return: <br>Title: "Spaceballs"<br>Director: "Mel Brooks"<br>Genre: "Comedy"</li>
+            <br><li>/users creates a new JSON object holding data about the user including an ID using a POST request. <br>Example:<br>ID: 1<br>Username: John Doe<br>Password: Password123!<br>email: jondoe@email.com<br>Birthday: 01-02-03<br>Favorite Movies: []</li>
+            <br><li>/users/ID updates a user's information using a PUT request. <br>Example:<br>ID: 1<br>Username: Jon Doe<br>Password123!<br>email: jondoe@email.com<br>Birthday: 01-02-03<br>Favorite Movies: []</li>
+            <br><li>/users/ID/movieName adds a movie to a user's favorites list using a POST request. This returns only a text saying that the movie has been added.</li>
+            <br><li>/users/ID/movieName removes a movie from a user's favorites list using a DELETE request. This returns only a text saying that the movie has been removed.</li>
+            <br><li>/users/ID removes a user using a DELETE request. This returns only a text saying that the user has been deleted.</li>
+        </ul>
+    </body>
+</html>
+
+
+
+
+
+
+
+
