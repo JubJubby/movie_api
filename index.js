@@ -38,9 +38,7 @@ let movies = [
     },
     {
         Title: "Monty Python and the Holy Grail",
-        Director: [
-            "Terry Gillam", "Terry Jones"
-        ],
+        Director: "Terry Gilliam",
         Genre: "Comedy"
     },
     {
@@ -60,9 +58,7 @@ let movies = [
     },
     {
         Title: "Interstella 5555",
-        Director: [
-            "Leiji Matsumoto", "Kazuhisa Takenouchi", "Hirotoshi Rissen", "Daisuke Nishio"
-        ],
+        Director: "Kazuhisa Takenouchi",
         Genre: "Anime"
     },
     {
@@ -74,6 +70,11 @@ let movies = [
         Title: "This Is Spinal Tap",
         Director: "Rob Reiner",
         Genre: "Comedy"
+    },
+    {
+        Title: "Oppenheimer",
+        Director: "Christopher Nolan",
+        Genre: "Thriller"
     }
 ];
 
