@@ -176,7 +176,14 @@ app.get("/documentation", (req, res) => {
 });
 
 app.get("/movies", (req, res) => {
-    res.status(200).json(movies);
+    Movie.find()
+        .then((movies) => {
+            res.status(200).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
 });
 
 app.get("/movies/:title", (req, res) => {
