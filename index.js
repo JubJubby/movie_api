@@ -18,73 +18,73 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {f
 
 app.use(bodyParser.json());
 
-//array of users
-let users = [
-    {
-        id: 1,
-        name: "Dan",
-        favoriteMovies: []
-    },
-    {
-        id: 2,
-        name: "Natalie",
-        favoriteMovies: ["Spaceballs"]
-    },
-]
+// //array of users
+// let users = [
+//     {
+//         id: 1,
+//         name: "Dan",
+//         favoriteMovies: []
+//     },
+//     {
+//         id: 2,
+//         name: "Natalie",
+//         favoriteMovies: ["Spaceballs"]
+//     },
+// ]
 
-//array of ten movies
-let movies = [
-    {
-        Title: "Spaceballs",
-        Director: "Mel Brooks",
-        Genre: "Comedy"
-    },
-    {
-        Title: "Rat Race",
-        Director: "Jerry Zucker",
-        Genre: "Comedy"
-    },
-    {
-        Title: "Monty Python and the Holy Grail",
-        Director: "Terry Gilliam",
-        Genre: "Comedy"
-    },
-    {
-        Title: "Tenacious D in The Pick of Destiny",
-        Director: "Liam Lynch",
-        Genre: "Comedy"
-    },
-    {
-        Title: "Donnie Darko",
-        Director: "Richard Kelly",
-        Genre: "Horror"
-    },
-    {
-        Title: "Interstellar",
-        Director: "Christopher Nolan",
-        Genre: "Science Fiction"
-    },
-    {
-        Title: "Interstella 5555",
-        Director: "Kazuhisa Takenouchi",
-        Genre: "Anime"
-    },
-    {
-        Title: "Bill and Ted's Excellent Adventure",
-        Director: "Stephen Herek",
-        Genre: "Action"
-    },
-    {
-        Title: "This Is Spinal Tap",
-        Director: "Rob Reiner",
-        Genre: "Comedy"
-    },
-    {
-        Title: "Oppenheimer",
-        Director: "Christopher Nolan",
-        Genre: "Thriller"
-    }
-];
+// //array of ten movies
+// let movies = [
+//     {
+//         Title: "Spaceballs",
+//         Director: "Mel Brooks",
+//         Genre: "Comedy"
+//     },
+//     {
+//         Title: "Rat Race",
+//         Director: "Jerry Zucker",
+//         Genre: "Comedy"
+//     },
+//     {
+//         Title: "Monty Python and the Holy Grail",
+//         Director: "Terry Gilliam",
+//         Genre: "Comedy"
+//     },
+//     {
+//         Title: "Tenacious D in The Pick of Destiny",
+//         Director: "Liam Lynch",
+//         Genre: "Comedy"
+//     },
+//     {
+//         Title: "Donnie Darko",
+//         Director: "Richard Kelly",
+//         Genre: "Horror"
+//     },
+//     {
+//         Title: "Interstellar",
+//         Director: "Christopher Nolan",
+//         Genre: "Science Fiction"
+//     },
+//     {
+//         Title: "Interstella 5555",
+//         Director: "Kazuhisa Takenouchi",
+//         Genre: "Anime"
+//     },
+//     {
+//         Title: "Bill and Ted's Excellent Adventure",
+//         Director: "Stephen Herek",
+//         Genre: "Action"
+//     },
+//     {
+//         Title: "This Is Spinal Tap",
+//         Director: "Rob Reiner",
+//         Genre: "Comedy"
+//     },
+//     {
+//         Title: "Oppenheimer",
+//         Director: "Christopher Nolan",
+//         Genre: "Thriller"
+//     }
+// ];
 
 app.use(morgan("combined", {stream: accessLogStream}));
 app.use("/documentation", express.static("public"));
@@ -235,6 +235,28 @@ app.get("/movies/directors/:Name", (req, res) => {
     Directors.findOne({Name: req.params.Name})
         .then((director) => {
             res.json(director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
+
+app.get("/users", (req, res) => {
+    Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
+
+app.get("/users/:Username", (req, res) => {
+    Users.findOne({Username: req.params.Username})
+        .then((user) => {
+            res.json(user);
         })
         .catch((err) => {
             console.error(err);
