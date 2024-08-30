@@ -208,22 +208,15 @@ app.get("/movies/genre/:Name", (req, res) => {
         });
 });
 
-app.get("/movies/directors/:directorName", (req, res) => {
-    const {directorName} = req.params;
-
-    const moviesByDirector = movies.filter((movie) => {
-        if (Array.isArray(movie.Director)) {
-            return movie.Director.includes(directorName);
-        } else {
-            return movie.Director === directorName;
-        }
-    });
-
-    if (moviesByDirector) {
-        res.status(200).json(moviesByDirector);
-    } else {
-        res.status(400).send("no such director");
-    }
+app.get("/movies/directors/:Name", (req, res) => {
+    Directors.findOne({Name: req.params.Name})
+        .then((director) => {
+            res.json(director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
 });
 
 //listen for requests
