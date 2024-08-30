@@ -187,7 +187,7 @@ app.get("/movies", (req, res) => {
 });
 
 app.get("/movies/:title", (req, res) => {
-    Movies.fineOne({Title: req.params.Title})
+    Movies.findOne({Title: req.params.Title})
     .then((movie) => {
         res.json(movie);
     })
@@ -197,16 +197,16 @@ app.get("/movies/:title", (req, res) => {
     });
 });
 
-app.get("/movies/genre/:genreName", (req, res) => {
-    const {genreName} = req.params;
-    const genre = movies.find((movie) => movie.Genre === genreName);
-
-    if (genre) {
-        res.status(200).json(genre);
-    } else {
-        res.status(400).send("no such genre");
-    }
-})
+app.get("/movies/genre/:Name", (req, res) => {
+    Genres.findOne({Name: req.params.Name})
+        .then((genre) => {
+            req.json(genre.Description);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
 
 app.get("/movies/directors/:directorName", (req, res) => {
     const {directorName} = req.params;
