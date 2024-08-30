@@ -176,7 +176,7 @@ app.get("/documentation", (req, res) => {
 });
 
 app.get("/movies", (req, res) => {
-    Movie.find()
+    Movies.find()
         .then((movies) => {
             res.status(200).json(movies);
         })
