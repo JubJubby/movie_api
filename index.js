@@ -209,7 +209,7 @@ app.get("/movies", (req, res) => {
         });
 });
 
-app.get("/movies/:title", (req, res) => {
+app.get("/movies/:Title", (req, res) => {
     Movies.findOne({Title: req.params.Title})
     .then((movie) => {
         res.json(movie);
