@@ -149,7 +149,7 @@ app.delete("/users/:id/:movieTitle", (req, res) => {
 })
 
 app.delete("/users/:Username", (req, res) => {
-    Users.findOneAndRemove({Username: req.params.Username})
+    Users.findOneAndDelete({Username: req.params.Username})
         .then((user) => {
             if(!user) {
                 res.status(400).send(req.params.Username + " was not found");
@@ -221,9 +221,9 @@ app.get("/movies/:Title", (req, res) => {
 });
 
 app.get("/movies/genre/:Name", (req, res) => {
-    Genres.findOne({Name: req.params.Name})
-        .then((genre) => {
-            req.json(genre.Description);
+    Movies.findOne({"Genre.Name": req.params.Name})
+        .then((movie) => {
+            res.json(movie.Genre.Description);
         })
         .catch((err) => {
             console.error(err);
@@ -232,9 +232,9 @@ app.get("/movies/genre/:Name", (req, res) => {
 });
 
 app.get("/movies/directors/:Name", (req, res) => {
-    Directors.findOne({Name: req.params.Name})
-        .then((director) => {
-            res.json(director);
+    Movies.findOne({"Directors.Name": req.params.Name})
+        .then((movie) => {
+            res.json(movie.Directors.Description);
         })
         .catch((err) => {
             console.error(err);
