@@ -12,82 +12,15 @@ const express = require("express"),
     fs = require("fs"),
     path = require("path"),
     uuid = require("uuid");
-
+const passport = require("passport");
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {flags: "a"})
 
-// app.use(bodyParser.json());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// let auth = require('./auth')(app);
-
-// //array of users
-// let users = [
-//     {
-//         id: 1,
-//         name: "Dan",
-//         favoriteMovies: []
-//     },
-//     {
-//         id: 2,
-//         name: "Natalie",
-//         favoriteMovies: ["Spaceballs"]
-//     },
-// ]
-
-// //array of ten movies
-// let movies = [
-//     {
-//         Title: "Spaceballs",
-//         Director: "Mel Brooks",
-//         Genre: "Comedy"
-//     },
-//     {
-//         Title: "Rat Race",
-//         Director: "Jerry Zucker",
-//         Genre: "Comedy"
-//     },
-//     {
-//         Title: "Monty Python and the Holy Grail",
-//         Director: "Terry Gilliam",
-//         Genre: "Comedy"
-//     },
-//     {
-//         Title: "Tenacious D in The Pick of Destiny",
-//         Director: "Liam Lynch",
-//         Genre: "Comedy"
-//     },
-//     {
-//         Title: "Donnie Darko",
-//         Director: "Richard Kelly",
-//         Genre: "Horror"
-//     },
-//     {
-//         Title: "Interstellar",
-//         Director: "Christopher Nolan",
-//         Genre: "Science Fiction"
-//     },
-//     {
-//         Title: "Interstella 5555",
-//         Director: "Kazuhisa Takenouchi",
-//         Genre: "Anime"
-//     },
-//     {
-//         Title: "Bill and Ted's Excellent Adventure",
-//         Director: "Stephen Herek",
-//         Genre: "Action"
-//     },
-//     {
-//         Title: "This Is Spinal Tap",
-//         Director: "Rob Reiner",
-//         Genre: "Comedy"
-//     },
-//     {
-//         Title: "Oppenheimer",
-//         Director: "Christopher Nolan",
-//         Genre: "Thriller"
-//     }
-// ];
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+let auth = require('./auth')(app);
 
 app.use(morgan("combined", {stream: accessLogStream}));
 app.use("/documentation", express.static("public"));
