@@ -104,3 +104,8 @@
 ::1 - - [09/Sep/2024:17:27:39 +0000] "GET /movies/genre/Comedy HTTP/1.1" 200 124 "-" "PostmanRuntime/7.41.1"
 ::1 - - [09/Sep/2024:17:28:02 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 500 69 "-" "PostmanRuntime/7.41.1"
 ::1 - - [09/Sep/2024:17:28:25 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 500 70 "-" "PostmanRuntime/7.41.1"
+::1 - - [10/Sep/2024:17:43:13 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 500 70 "-" "PostmanRuntime/7.41.1"
+::1 - - [10/Sep/2024:17:43:28 +0000] "GET /movies/director/Christopher%20Nolan HTTP/1.1" 404 174 "-" "PostmanRuntime/7.41.1"
+::1 - - [10/Sep/2024:17:43:39 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 500 70 "-" "PostmanRuntime/7.41.1"
+::1 - - [10/Sep/2024:17:43:53 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 500 69 "-" "PostmanRuntime/7.41.1"
+::1 - - [11/Sep/2024:15:41:23 +0000] "GET /movies/directors/Christopher%20Nolan HTTP/1.1" 200 175 "-" "PostmanRuntime/7.41.1"
