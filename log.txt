@@ -121,3 +121,8 @@
 ::1 - - [12/Sep/2024:15:26:49 +0000] "POST /users/DanMooar/movies/66c76d04a5658a5391b92a75 HTTP/1.1" 200 222 "-" "PostmanRuntime/7.41.1"
 ::1 - - [12/Sep/2024:15:28:09 +0000] "GET /users HTTP/1.1" 201 930 "-" "PostmanRuntime/7.41.1"
 ::1 - - [12/Sep/2024:15:29:03 +0000] "DELETE /users/66cc8a9ea5658a5391b92a7d/Spaceballs HTTP/1.1" 500 1288 "-" "PostmanRuntime/7.41.1"
+::1 - - [17/Sep/2024:15:32:04 +0000] "DELETE /movies HTTP/1.1" 404 148 "-" "PostmanRuntime/7.41.1"
+::1 - - [17/Sep/2024:15:32:10 +0000] "GET /movies HTTP/1.1" 200 7278 "-" "PostmanRuntime/7.41.1"
+::1 - - [17/Sep/2024:15:32:20 +0000] "GET /users HTTP/1.1" 201 930 "-" "PostmanRuntime/7.41.1"
+::1 - - [17/Sep/2024:15:32:54 +0000] "POST /users/DanMooar/movies/66c77712a5658a5391b92a7c HTTP/1.1" 200 249 "-" "PostmanRuntime/7.41.1"
+::1 - - [17/Sep/2024:15:33:19 +0000] "DELETE /users/DanMooar/movies/66c77712a5658a5391b92a7c HTTP/1.1" 200 222 "-" "PostmanRuntime/7.41.1"
