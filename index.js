@@ -12,15 +12,16 @@ const express = require("express"),
     fs = require("fs"),
     path = require("path"),
     uuid = require("uuid");
-const passport = require("passport");
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {flags: "a"})
 
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
 let auth = require('./auth')(app);
+const passport = require("passport");
+require("./passport");
+app.use(passport.initialize());
 
 app.use(morgan("combined", {stream: accessLogStream}));
 app.use("/documentation", express.static("public"));
@@ -31,7 +32,7 @@ app.use((err, req, res, next) => {
 });
 
 //CREATE/POST requests
-app.post("/users",  (req, res) => {
+app.post("/users", (req, res) => {
     Users.findOne({Username: req.body.Username})
         .then((user) => {
             if (user) {
@@ -54,7 +55,10 @@ app.post("/users",  (req, res) => {
         })
 })
 
-app.post("/users/:Username/movies/:MovieID",   (req, res) => {
+app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Users.findOneAndUpdate(
         {Username: req.params.Username},
         {
@@ -71,7 +75,10 @@ app.post("/users/:Username/movies/:MovieID",   (req, res) => {
 });
 
 //DELETE requests
-app.delete("/users/:id/:movieTitle",   (req, res) => {
+app.delete("/users/:id/:movieTitle", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     const {id, movieTitle} = req.params;
 
     let user = users.find(user => user.id == id);
@@ -84,7 +91,10 @@ app.delete("/users/:id/:movieTitle",   (req, res) => {
     }
 })
 
-app.delete("/users/:Username",   (req, res) => {
+app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Users.findOneAndDelete({Username: req.params.Username})
         .then((user) => {
             if(!user) {
@@ -100,7 +110,10 @@ app.delete("/users/:Username",   (req, res) => {
 });
 
 //UPDATE/PUT requests
-app.put("/users/:Username",   (req, res) => {
+app.put("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Users.findOneAndUpdate(
         {Username: req.params.Username},
         {$set: {
@@ -126,15 +139,24 @@ app.get("/", (req, res) => {
     res.send("Let's check out some movies! Add '/documentation' to the end of the url for more on how to use this app.");
 });
 
-app.get("/secreturl",   (req, res) => {
+app.get("/secreturl", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     res.send("This is a secret url with super top-secret content.");
 })
 
-app.get("/documentation",   (req, res) => {
+app.get("/documentation", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     res.sendFile("public/documentation.html", {root: __dirname});
 });
 
-app.get("/movies",   (req, res) => {
+app.get("/movies", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Movies.find()
         .then((movies) => {
             res.status(200).json(movies);
@@ -145,7 +167,10 @@ app.get("/movies",   (req, res) => {
         });
 });
 
-app.get("/movies/:Title",   (req, res) => {
+app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Movies.findOne({Title: req.params.Title})
     .then((movie) => {
         res.json(movie);
@@ -156,7 +181,10 @@ app.get("/movies/:Title",   (req, res) => {
     });
 });
 
-app.get("/movies/genre/:Name",   (req, res) => {
+app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Movies.findOne({"Genre.Name": req.params.Name})
         .then((movie) => {
             res.json(movie.Genre.Description);
@@ -167,7 +195,10 @@ app.get("/movies/genre/:Name",   (req, res) => {
         });
 });
 
-app.get("/movies/directors/:Name",   (req, res) => {
+app.get("/movies/directors/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Movies.findOne({"Director.Name": req.params.Name})
         .then((movie) => {
             res.json(movie.Director.Bio);
@@ -178,7 +209,10 @@ app.get("/movies/directors/:Name",   (req, res) => {
         });
 });
 
-app.get("/users",   (req, res) => {
+app.get("/users", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Users.find()
         .then((users) => {
             res.status(201).json(users);
@@ -189,7 +223,10 @@ app.get("/users",   (req, res) => {
         });
 });
 
-app.get("/users/:Username",   (req, res) => {
+app.get("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
     Users.findOne({Username: req.params.Username})
         .then((user) => {
             res.json(user);
