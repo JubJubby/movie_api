@@ -12,14 +12,15 @@ const express = require("express"),
     fs = require("fs"),
     path = require("path"),
     uuid = require("uuid");
-
+const passport = require("passport");
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {flags: "a"})
 
-// app.use(bodyParser.json());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// let auth = require('./auth')(app);
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+let auth = require('./auth')(app);
 
 app.use(morgan("combined", {stream: accessLogStream}));
 app.use("/documentation", express.static("public"));
