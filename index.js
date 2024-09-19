@@ -62,7 +62,7 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
     Users.findOneAndUpdate(
         {Username: req.params.Username},
         {
-            $push: {Fav: req.params.MovieID},
+            $push: {favoriteMovies: req.params.MovieID},
         },
         {new: true}) //makes sure the updated document is returned
         .then((updatedUser) => {
@@ -75,21 +75,25 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 });
 
 //DELETE requests
-app.delete("/users/:id/:movieTitle", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), (req, res) => {
     if(req.user.Username !== req.params.Username){
         return res.status(400).send('Permission denied');
     }
-    const {id, movieTitle} = req.params;
-
-    let user = users.find(user => user.id == id);
-
-    if (user) {
-        user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
-        res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
-    } else {
-        res.status(400).send("no such user")
-    }
-})
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $pull: { FavoriteMovies: req.params.MovieID },
+      },
+      { new: true }
+    ) //makes sure the updated document is returned
+      .then((updatedUser) => {
+        res.json(updatedUser);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  });
 
 app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
     if(req.user.Username !== req.params.Username){
@@ -147,16 +151,10 @@ app.get("/secreturl", passport.authenticate('jwt', { session: false }), (req, re
 })
 
 app.get("/documentation", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     res.sendFile("public/documentation.html", {root: __dirname});
 });
 
 app.get("/movies", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     Movies.find()
         .then((movies) => {
             res.status(200).json(movies);
@@ -168,9 +166,6 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     Movies.findOne({Title: req.params.Title})
     .then((movie) => {
         res.json(movie);
@@ -182,9 +177,6 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req
 });
 
 app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     Movies.findOne({"Genre.Name": req.params.Name})
         .then((movie) => {
             res.json(movie.Genre.Description);
@@ -196,9 +188,6 @@ app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }),
 });
 
 app.get("/movies/directors/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     Movies.findOne({"Director.Name": req.params.Name})
         .then((movie) => {
             res.json(movie.Director.Bio);
@@ -210,9 +199,6 @@ app.get("/movies/directors/:Name", passport.authenticate('jwt', { session: false
 });
 
 app.get("/users", passport.authenticate('jwt', { session: false }), (req, res) => {
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
     Users.find()
         .then((users) => {
             res.status(201).json(users);
