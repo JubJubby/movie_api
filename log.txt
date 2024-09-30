@@ -163,3 +163,5 @@
 ::1 - - [19/Sep/2024:16:59:21 +0000] "GET /users/JunieBalloonie/ HTTP/1.1" 200 209 "-" "PostmanRuntime/7.41.1"
 ::1 - - [19/Sep/2024:16:59:41 +0000] "DELETE /users/JunieBalloonie/movies/66c75772a5658a5391b92a73 HTTP/1.1" 200 183 "-" "PostmanRuntime/7.41.1"
 ::1 - - [19/Sep/2024:17:00:36 +0000] "DELETE /users/JunieBalloonie HTTP/1.1" 200 26 "-" "PostmanRuntime/7.41.1"
+::1 - - [30/Sep/2024:14:08:03 +0000] "POST /users/JunieBalloonie HTTP/1.1" 404 160 "-" "PostmanRuntime/7.41.2"
+::1 - - [30/Sep/2024:14:08:25 +0000] "POST /users HTTP/1.1" 201 229 "-" "PostmanRuntime/7.41.2"

@@ -135,7 +135,7 @@ app.put("/users/:Username", passport.authenticate('jwt', { session: false }),
         if (!errors.isEmpty()) {
             return res.status(422).json({errors:errors.array()});
         }
-        
+
         if(req.user.Username !== req.params.Username){
             return res.status(400).send('Permission denied');
         }
@@ -245,6 +245,7 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), (r
 });
 
 //listen for requests
-app.listen(8080, () => {
-    console.log("Your app is listening on port 8080");
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0",() => {
+    console.log("Your app is listening on port " + port);
 });
