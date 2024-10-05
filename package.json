@@ -20,10 +20,12 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongodb": "^6.9.0",
+    "mongoose": "^8.7.0",
     "mongosh": "^2.3.1",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
