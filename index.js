@@ -11,8 +11,7 @@ const bodyParser = require("body-parser");
 const express = require("express"),
     morgan = require("morgan"),
     fs = require("fs"),
-    path = require("path"),
-    uuid = require("uuid");
+    path = require("path")
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {flags: "a"})
 const cors = require("cors");
@@ -250,4 +249,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0",() => {
     console.log("Your app is listening on port " + port);
 });
-// kZbNR6taVixVIkG8
