@@ -94,7 +94,7 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 app.delete("/users/:id/:movieTitle",   (req, res) => {
     const {id, movieTitle} = req.params;
 
-    let user = users.find(user => user.id == id);
+    let user = Users.find(user => user.id == id);
 
     if (user) {
         user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
