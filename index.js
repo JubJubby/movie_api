@@ -91,18 +91,26 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 });
 
 //DELETE requests
-app.delete("/users/:id/:movieTitle",   (req, res) => {
-    const {id, movieTitle} = req.params;
+app.delete("/users/:Username/movies/:movieID", passport.authenticate('jwt', {session: false}), (req, res) => {
+        if (req.user.Username !== req.params.Username) {
+            return res.status(400).send("Permission denied")
+        }
 
-    let user = Users.find(user => user.id == id);
-
-    if (user) {
-        user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle);
-        res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
-    } else {
-        res.status(400).send("no such user")
-    }
-})
+    Users.findOneAndUpdate(
+        { Username: req.params.Username },
+        {
+            $pull: { FavoriteMovies: req.params.MovieID},
+        },
+        { new: true }
+    )
+        .then((updatedUser) => {
+            res.json(updatedUser);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+        });
+});
 
 app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
     if(req.user.Username !== req.params.Username){
