@@ -91,7 +91,7 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 });
 
 //DELETE requests
-app.delete("/users/:Username/movies/:movieID", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {session: false}), (req, res) => {
         if (req.user.Username !== req.params.Username) {
             return res.status(400).send("Permission denied")
         }
