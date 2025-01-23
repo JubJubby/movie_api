@@ -14,10 +14,23 @@ const express = require("express"),
     path = require("path")
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {flags: "a"})
-const cors = require("cors");
 const {check, validationResult} = require("express-validator");
 
-app.use(cors());
+
+const cors = require("cors");
+let allowedOrigins = ["http://localhost:8080", "http://localhost:1234", "https://jubflix.netlify.app"];
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) { //if the origin isn't in the list of origins
+            let message = "The CORS policy for this application doesn't allow access from origin " + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
+
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
